@@ -1,8 +1,10 @@
+import {RouterProvider} from "react-router-dom"
+import appRouter from "./router/Router";
 
 function App() {
   return (
-    <div className="text-bold text-red-600">
-     hii
+    <div>
+      <RouterProvider router={appRouter}/>
     </div>
   );
 }
