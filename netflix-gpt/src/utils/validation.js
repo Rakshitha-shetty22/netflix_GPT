@@ -1,5 +1,5 @@
 export const validation = (password, email, name) => {
-    if (!name) return "Please enter the name"
+    if (name !== null && !name) return "Please enter the name"   //handled for loginpage name !=null
 
     const isEmail = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email)
     if (!isEmail) return "Please enter the valid email"
