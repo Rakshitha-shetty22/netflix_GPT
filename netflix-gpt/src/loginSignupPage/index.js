@@ -1,7 +1,14 @@
 import { useRef, useState } from "react";
 import { validation } from "../utils/validation";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../utils/redux/userSlice";
+import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
   const [isLogIn, setLoginIn] = useState(true);
@@ -9,6 +16,8 @@ const LoginPage = () => {
   const password = useRef(null);
   const email = useRef(null);
   const name = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleToggle = () => {
     setLoginIn(!isLogIn);
@@ -23,34 +32,53 @@ const LoginPage = () => {
     setError(result);
 
     if (result === null) {
-      if (!isLogIn) {                 //Logic for signup       
+      if (!isLogIn) {
+        //Logic for signup
         createUserWithEmailAndPassword(
           auth,
           email.current.value,
-          password.current.value
-        )                             //order should be same email then password
+          password.current.value          //order should be same email then password
+        )
           .then((userCredential) => {
             const user = userCredential.user;
-            console.log(user);
+
+            updateProfile(user, {           
+              displayName: name.current.value,
+            })
+              .then(() => {
+                dispatch(    //dispatching action becz need to update the store after getting the name 
+                  addUser({
+                    uid: user.uid,
+                    name: name.current.value,
+                    email: user.email,
+                  })
+                );
+                navigate("/browser");
+              })
+              .catch((error) => {});
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             setError(errorCode + "-" + errorMessage);
           });
-      }
-      else {                            //logic for login
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setError(errorCode + "-" + errorMessage);
-        });
-      
+      } else {
+        //logic for login
+        signInWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+          .then((userCredential) => {
+            // const user = userCredential.user;
+            // console.log(user);            //object that contains email, token etc
+            navigate("/browser");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setError(errorCode + "-" + errorMessage);
+          });
       }
     }
   };
