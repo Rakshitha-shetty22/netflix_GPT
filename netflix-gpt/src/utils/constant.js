@@ -1,0 +1,7 @@
+export const LOGO ="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+export const PROFILE_ICON ="https://occ-0-3973-3663.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229"
+export const BG_IMAGE = "https://assets.nflxext.com/ffe/siteui/vlv3/259422c0-c399-4047-baf2-44bac5612ac1/435b6df3-53e6-4b88-b1be-0f3804e210a1/IN-en-20240819-POP_SIGNUP_TWO_WEEKS-perspective_WEB_f4be2d60-6f77-49e2-aaf7-6327ac5a3a95_large.jpg"
+export  const TRAILER_MVE_DISCRIPTION = "In a city where fire, water, land and air residents live together, a fiery young woman and a go-with- the-flow guy will discover something elemental: how much they have in common."
+
+export const TODAYS_RECOM = "https://api.mxplayer.in/v1/web/detail/browseItem?&pageSize=20&isCustomized=true&pageNum=0&type=1&browseLangFilterIds=ml&releaseYearsFilterIds=2023,2020,2021&device-density=2&userid=597d1ead-b36c-4389-b479-0a5896a522d6&platform=com.mxplay.desktop&content-languages=hi,en,kn&kids-mode-enabled=false"
+export const NEW_IN_SHOWS = "https://api.mxplayer.in/v1/web/home/tab/abe3c11f827b31e834dfe5206a28849d?device-density=2&userid=597d1ead-b36c-4389-b479-0a5896a522d6&platform=com.mxplay.desktop&content-languages=hi,en,kn&pageSize=2&kids-mode-enabled=false"

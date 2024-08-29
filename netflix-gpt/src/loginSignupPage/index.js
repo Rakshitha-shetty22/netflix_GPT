@@ -6,9 +6,10 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { addUser } from "../utils/redux/userSlice";
 import { useDispatch } from "react-redux";
+import Header from "../header/Header";
+import { BG_IMAGE } from "../utils/constant";
 
 const LoginPage = () => {
   const [isLogIn, setLoginIn] = useState(true);
@@ -16,7 +17,6 @@ const LoginPage = () => {
   const password = useRef(null);
   const email = useRef(null);
   const name = useRef(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleToggle = () => {
@@ -40,7 +40,7 @@ const LoginPage = () => {
           password.current.value          //order should be same email then password
         )
           .then((userCredential) => {
-            const user = userCredential.user;
+            const user = userCredential.user;   //after we get the user here the automatically onAuthStateChnage is called...
 
             updateProfile(user, {           
               displayName: name.current.value,
@@ -53,10 +53,10 @@ const LoginPage = () => {
                     email: user.email,
                   })
                 );
-                navigate("/browser");
               })
-              .catch((error) => {});
+              .catch((error) => {  setError(error);});
           })
+
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -72,7 +72,6 @@ const LoginPage = () => {
           .then((userCredential) => {
             // const user = userCredential.user;
             // console.log(user);            //object that contains email, token etc
-            navigate("/browser");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -85,15 +84,9 @@ const LoginPage = () => {
 
   return (
     <div className="relative">
-      <div className="absolute z-50 w-[14%] ml-[142px] mt-[12px]">
-        <img
-          src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-          alt="logo"
-        />
-      </div>
-
+      <Header/>
       <img
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/259422c0-c399-4047-baf2-44bac5612ac1/435b6df3-53e6-4b88-b1be-0f3804e210a1/IN-en-20240819-POP_SIGNUP_TWO_WEEKS-perspective_WEB_f4be2d60-6f77-49e2-aaf7-6327ac5a3a95_large.jpg"
+        src={BG_IMAGE}
         alt="bgImage"
       />
       {/* gradient overlay */}

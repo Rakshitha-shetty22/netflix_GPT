@@ -1,22 +1,25 @@
-import { signOut } from "firebase/auth";
-import { useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useEffect,useState } from "react";
+import { addUser, removeUser } from "../utils/redux/userSlice";
+import { LOGO, PROFILE_ICON } from "../utils/constant";
 
 import search from "../assests/search.png";
 import caret from "../assests/caret.png";
 import mail from "../assests/mail.png";
-import { useState } from "react";
+import upArrow from "../assests/upArrow.png";
 
 const Header = () => {
   const user = useSelector((store) => store.user.userInfo);
   const navigate = useNavigate();
   const [isHover, setHover] = useState(false);
+  const dispatch = useDispatch()
 
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        navigate("/");
       })
       .catch((error) => {});
   };
@@ -24,14 +27,35 @@ const Header = () => {
   const handleHover = () => {
     setHover(true);
   };
-  console.log(user);
+  
+  useEffect(()=>{                           //whenever auth changes it will be called and it should be in common component.
+   const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const {uid, displayName, email} = user;
+          dispatch(addUser({uid: uid, name: displayName, email: email}))
+          navigate('/browser')      //only if the user successfully signed in
+        } else {
+          dispatch(removeUser());
+          navigate('/')
+        }
+      });
+      return () => unsubscribe();   // Cleanup on component unmount
+},[])
 
   return (
-    <div className="fixed z-50  flex  bg-gradient-to-b from-black opacity-90 h-[68px]">
+    <>
+    {!user && <div className="absolute z-50 w-[14%] ml-[142px] mt-[12px]">
+        <img
+          src={LOGO}
+          alt="logo"
+        />
+      </div>}
+
+    {user && <div className="fixed z-50  flex  bg-gradient-to-b from-black opacity-90 h-[68px]">
       <div className="flex flex-row items-center w-8/12">
         <div className="w-[10%] ml-[58px]">
           <img
-            src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+            src={LOGO}
             alt="logo"
           />
         </div>
@@ -47,18 +71,18 @@ const Header = () => {
       <div className="flex w-4/12 justify-end mr-[58px] items-center text-white">
         <img src={search} alt="icon" className="pr-[15px]" />
         {user && <p className="pr-[15px]">{user.name}</p>}
-        <div className="flex h-[68px] items-center cursor-pointer" onMouseEnter={handleHover}>
+        <div className="flex h-[68px] items-center cursor-pointer" onMouseEnter={handleHover} onMouseLeave={()=>setHover(false)}>
           <img className="rounded-md h-[35px]"
-            src="https://occ-0-3973-3663.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229"
+            src={PROFILE_ICON}
             alt="icon"
           />
-          <img src={caret} alt="icon" />
+          <img src={isHover? upArrow : caret} alt="icon" />
         </div>
       </div>
       {isHover && (
-        <div className="absolute top-[70px] w-auto right-[60px] bg-black text-black p-2" onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}>
+        <div className="absolute top-[65px] w-auto right-[60px] bg-black text-black p-2" onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}>
          <div className="flex my-2"> <img className="rounded-md mr-2"
-            src="https://occ-0-3973-3663.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229"
+            src={PROFILE_ICON}
             alt="icon"
           />
          <p className="text-white">{user?.name}</p>
@@ -71,10 +95,10 @@ const Header = () => {
           </div>
           <hr className="my-2 mt-5 mx-0"/>
           <button className="text-white text-[14px] w-full flex justify-center mb-2 hover:underline" onClick={handleSignOut}>Sign Out of the netflix</button>
-
         </div>
       )}
-    </div>
+    </div>}
+    </>
   );
 };
 
