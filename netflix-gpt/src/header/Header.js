@@ -16,6 +16,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [isHover, setHover] = useState(false);
   const dispatch = useDispatch()
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -42,6 +43,20 @@ const Header = () => {
       return () => unsubscribe();   // Cleanup on component unmount
 },[])
 
+useEffect(() => {
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
   return (
     <>
     {!user && <div className="absolute z-50 w-[14%] ml-[142px] mt-[12px]">
@@ -51,7 +66,9 @@ const Header = () => {
         />
       </div>}
 
-    {user && <div className="fixed z-50  flex  bg-gradient-to-b from-black opacity-90 h-[68px]">
+    {user && <div  className={`fixed z-50 flex w-full transition-colors duration-300 ${
+            isScrolled ? "bg-black" : "bg-gradient-to-b from-black opacity-90"
+          } h-[68px]`}>
       <div className="flex flex-row items-center w-8/12">
         <div className="w-[10%] ml-[58px]">
           <img

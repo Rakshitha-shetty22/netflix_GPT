@@ -9,7 +9,6 @@ const useFetchNewInShows = () => {
   const fetchData = async () => {
     const data = await fetch(NEW_IN_SHOWS);
     const jsonData = await data.json();
-    console.log("d",jsonData?.sections[1]?.items);
     dispatch(addnewInShows(jsonData?.sections[1]?.items));
   };
   useEffect(() => fetchData, []);

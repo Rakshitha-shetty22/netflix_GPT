@@ -15,18 +15,17 @@ const TrailerContainer = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        <div className=" w-full h-full bg-black z-50">
+    <>
+        <div className="w-full h-full z-50">
           <iframe
-            className="w-full h-[1040px] aspect-video"
+            className="w-full h-[1045px] aspect-video"
             src="https://www.youtube.com/embed/hXzcyx9V0xw?si=f3LnML6QJZkD5r-B&modestbranding=1&controls=0&rel=0&autoplay=1&mute=1&loop=1&playlist=hXzcyx9V0xw"
             title="YouTube video player"
           ></iframe>
         </div>
-        <div className="absolute top-0 left-0 w-full aspect-video bg-black opacity-60"></div>
-      </div>
-      <div className="absolute bottom-96 text-white pl-[68px]">
+        <div className="absolute top-0 left-0 w-full h-[1040px] bg-gradient-to-r from-black"></div>
+
+      <div className="absolute bottom-96 text-white pl-[68px] z-10">
         <img src={movieLogo} alt="logo" />
         {showDescription && (
           <p className="font-bold text-lg w-1/4 pb-6">
@@ -34,7 +33,7 @@ const TrailerContainer = () => {
           </p>
         )}
         <div>
-          <button className="text-2xl font-bold  bg-white text-black pb-[10px] pt-1 px-[35px] rounded-md mr-3  hover:bg-white/70">
+          <button className="text-2xl font-bold bg-white text-black pb-[10px] pt-1 px-[35px] rounded-md mr-3  hover:bg-white/70">
             <span className="text-4xl pr-1">▸</span> Play
           </button>
           <button className="text-2xl font-bold  bg-[#6d6d6e]/70 text-white rounded-md pb-3 pt-3 px-[30px] hover:bg-[#6d6d6e]/40">
@@ -42,7 +41,7 @@ const TrailerContainer = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
