@@ -19,7 +19,7 @@ const MovieContainer = () => {
   
   return (
     <div className='bg-black w-full h-auto '>
-    <div className="pl-[68px] relative z-20 -mt-64">
+    <div className="md:pl-[68px] pl-8 relative z-20 md:-mt-64 -mt-4">
       <MovieCardWidCategory category={"Now Playing"} movieList={nowPlaying.nowplaying}/>
       <MovieCardWidCategory category={"New In Shows"} movieList={nowPlaying.newInShows}/>
       <MovieCardWidCategory category={"Comedy Movies"} movieList={nowPlaying.comedy}/>

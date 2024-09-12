@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
     name: "user",
     initialState : {
-        userInfo: []
+        userInfo: [],
+        openAIkey: null,
     },
     reducers : {
         addUser : ( state, action ) => {
@@ -11,9 +12,12 @@ const userSlice = createSlice({
         },
         removeUser : ( state) => {
             state.userInfo = null;
-        }
+        },
+        addopenAIkey : ( state, action ) => {
+            state.openAIkey = action.payload;
+        },
     }
 })
 
 export default userSlice.reducer;
-export const  {addUser, removeUser} = userSlice.actions;
+export const  {addUser, removeUser, addopenAIkey} = userSlice.actions;

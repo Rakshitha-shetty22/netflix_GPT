@@ -16,14 +16,14 @@ const MovieCardWidCategory = (props) => {
   return (
     <div className="flex flex-col mb-6">
       <div>
-        <h1 className="text-white text-2xl py-4">{category}</h1>
+        <h1 className="text-white md:text-2xl py-4 text-xl">{category}</h1>
       </div>
 
       <div className="flex overflow-x-scroll space-x-3" style={{ scrollbarWidth: "none" }}>
         {movieList.map((items) => (
           <div
             key={items.id}
-            className="relative w-[320px] h-[180px] flex-shrink-0"  //
+            className="relative w-[320px] h-[180px] flex-shrink-0 xs:w-[270px]" 
             onMouseEnter={() => handleMouseEnter(items.id)}
             onMouseLeave={handleMouseLeave}
           >
@@ -33,7 +33,7 @@ const MovieCardWidCategory = (props) => {
                 autoPlay
                 muted
                 loop
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-lg"
               /> 
               
             ) : (

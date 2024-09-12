@@ -20,7 +20,10 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const handleToggle = () => {
+    setError("")
     setLoginIn(!isLogIn);
+    email.current.value = ""
+    password.current.value = ""
   };
 
   const handleValidation = () => {
@@ -54,13 +57,11 @@ const LoginPage = () => {
                   })
                 );
               })
-              .catch((error) => {  setError(error);});
+              .catch((error) => { setError(error);});
           })
 
           .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            setError(errorCode + "-" + errorMessage);
+            setError("This email already in use.. please signin");
           });
       } else {
         //logic for login
@@ -74,9 +75,7 @@ const LoginPage = () => {
             // console.log(user);            //object that contains email, token etc
           })
           .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            setError(errorCode + "-" + errorMessage);
+            setError("invalid username or password");
           });
       }
     }
@@ -86,6 +85,7 @@ const LoginPage = () => {
     <div className="relative">
       <Header/>
       <img
+      className="h-screen object-cover md:w-full"
         src={BG_IMAGE}
         alt="bgImage"
       />
@@ -95,7 +95,7 @@ const LoginPage = () => {
       <div className="absolute left-0 top-0 flex justify-center items-center w-full h-[90%]">
         <form
           onSubmit={(e) => e.preventDefault()} //prevent default is function
-          className="flex flex-col py-[48px] px-[68px] bg-black bg-opacity-70 text-white rounded-md"
+          className="flex flex-col py-[48px] px-[48px] md:py-[35px] md:px-[68px] xs:px-[30px] xs:py-[25px] bg-black bg-opacity-70 text-white rounded-md"
         >
           <h1 className="font-bold text-4xl mb-7">
             {isLogIn ? "Sign In" : "Sign Up"}
@@ -111,7 +111,7 @@ const LoginPage = () => {
           <input
             ref={email}
             type="text"
-            placeholder="Email or mobile number"
+            placeholder="Email id"
             className="py-4 px-4 w-80 mb-4 bg-[#161616] bg-opacity-70 border border-solid border-gray-500 rounded-md"
           />
           <input
