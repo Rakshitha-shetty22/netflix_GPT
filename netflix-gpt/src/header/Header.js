@@ -16,7 +16,6 @@ const Header = () => {
   const user = useSelector((store) => store.user.userInfo);
   const search = useSelector((store) => store.search.toggle);
   const showSideBar = useSelector((store) => store.sideBar.showSideBar);
-  console.log("se",search);
   
   const navigate = useNavigate();
   const [isHover, setHover] = useState(false);
