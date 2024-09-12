@@ -8,7 +8,7 @@ const useFetchNowPlaying = () => {
   const nowplaying =  useSelector (store=> store.movie.nowplaying)
 
   const fetchData = async () => {
-    const data = await fetch(`https://thingproxy.freeboard.io/fetch/${NOW_PLAYING}`);
+    const data = await fetch(NOW_PLAYING);
     const jsonData = await data.json();
     dispatch(addNowPlaying(jsonData?.items));
   };

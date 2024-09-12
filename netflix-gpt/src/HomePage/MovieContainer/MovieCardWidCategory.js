@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IMAGE_CDN } from "../../utils/constant";
+import Shimmer from "../../utils/shimmerUI/Shimmer";
 
 const MovieCardWidCategory = (props) => {
   const { category, movieList } = props;
@@ -12,6 +13,10 @@ const MovieCardWidCategory = (props) => {
   const handleMouseLeave = () => {
     setHoveredMovie(null);
   };
+
+  if (!movieList || movieList.length === 0) {
+    return <Shimmer/>
+  }
 
   return (
     <div className="flex flex-col mb-6">

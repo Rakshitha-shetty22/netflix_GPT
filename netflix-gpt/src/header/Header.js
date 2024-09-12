@@ -16,6 +16,8 @@ const Header = () => {
   const user = useSelector((store) => store.user.userInfo);
   const search = useSelector((store) => store.search.toggle);
   const showSideBar = useSelector((store) => store.sideBar.showSideBar);
+  console.log("se",search);
+  
   const navigate = useNavigate();
   const [isHover, setHover] = useState(false);
   const dispatch = useDispatch();
@@ -43,6 +45,7 @@ const Header = () => {
         }
       } else {
         dispatch(removeUser());
+        dispatch(toggleState(false)); 
         navigate("/");
       }
     });
@@ -64,11 +67,10 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      dispatch(toggleState()); 
+    if (location.pathname === "/browser") {
+      dispatch(toggleState(true)); 
     }
-  }, [location.pathname, dispatch]);  //inside the useffect becz to trigger the btn
-  console.log(showSideBar);
+  }, [location, dispatch]);  //inside the useffect becz to trigger the btn
   
   const handleSideBar = () => {
     dispatch(toggleSideBar())
@@ -122,7 +124,7 @@ const Header = () => {
           </div>
 
           <div className="flex w-6/12 md:w-6/12 justify-end  md:mr-[58px] items-center text-white mr-6">
-          {!search && location.pathname !== "/search" &&  <Link className="md:mr-0 mr-6" to="/search"><button
+          {search && location.pathname !== "/search" &&  <Link className="md:mr-0 mr-6" to="/search"><button
               className="bg-slate-400 text-white px-1 md:px-4 py-2 md:w-auto w-full md:py-2 rounded-md mr-6 xs:mr-3 font-bold shadow-2xl xs:text-sm xs:py-1"> Search GPT </button></Link>}
             <p className="pr-[15px] hidden md:flex">{user.name}</p>
             <div

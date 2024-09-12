@@ -8,7 +8,7 @@ const useFetchNewInShows = () => {
   const newInShows =  useSelector (store=> store.movie.newInShows)
 
   const fetchData = async () => {
-    const data = await fetch(`https://thingproxy.freeboard.io/fetch/${NEW_IN_SHOWS}`);
+    const data = await fetch(NEW_IN_SHOWS);
     const jsonData = await data.json();
     dispatch(addnewInShows(jsonData?.sections[1]?.items));
   };

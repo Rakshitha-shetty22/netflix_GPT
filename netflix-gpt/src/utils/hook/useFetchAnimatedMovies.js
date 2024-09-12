@@ -8,7 +8,7 @@ const useFetchAnimatedMovies = () => {
   const animation =  useSelector (store=> store.movie.animated)
 
   const fetchData = async () => {
-    const data = await fetch(`https://thingproxy.freeboard.io/fetch/${KIDS_SECTION}`);
+    const data = await fetch(KIDS_SECTION);
     const jsonData = await data.json();
       dispatch(addAnimated(jsonData?.sections[3]?.items));
   };

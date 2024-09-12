@@ -8,7 +8,7 @@ const useFetchComedyMovies = () => {
   const comedy =  useSelector(store=> store.movie.comedy)
 
   const fetchData = async () => {
-    const data = await fetch(`https://thingproxy.freeboard.io/fetch/${COMEDY_MOVIES}`);
+    const data = await fetch(COMEDY_MOVIES);
     const jsonData = await data.json();
     dispatch(addComedy(jsonData?.items));
   };

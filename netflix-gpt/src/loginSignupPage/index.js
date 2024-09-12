@@ -136,6 +136,17 @@ const LoginPage = () => {
               {isLogIn ? "Sign up now." : "Sign in"}
             </span>
           </p>
+          <div className="mt-4 text-sm text-yellow-300">
+            <p>Please install the CORS extension:</p>
+         <a
+              href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?utm_source=ext_app_menu"
+              target="_blank"
+              rel="noopener noreferrer"
+               className="underline text-blue-400 overflow-auto break-word"
+            >
+              Install Allow CORS
+            </a>
+          </div>
         </form>
       </div>
     </div>
